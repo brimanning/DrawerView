@@ -2,6 +2,7 @@ package com.brimanning.drawerview;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -45,6 +46,8 @@ public class MainActivity extends Activity {
             public void onDrawerOpened(View drawerView) { }
         };
         drawerLayout.setDrawerListener(drawerToggle);
+        getActionBar().setIcon(R.drawable.ic_launcher);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
         populateDrawer();
@@ -63,6 +66,18 @@ public class MainActivity extends Activity {
                 updateHeader(currentSection);
             }
         });
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
     private void populateDrawer() {
